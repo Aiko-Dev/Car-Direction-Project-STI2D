@@ -1,0 +1,23 @@
+{
+  "name": "car-direction-project-sti2d",
+  "version": "1.0.0",
+  "description": "A functionnal and 3D direction car system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aiko-Dev/Car-Direction-Project-STI2D.git"
+  },
+  "author": "Aiko-Dev RedBoxing",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aiko-Dev/Car-Direction-Project-STI2D/issues"
+  },
+  "homepage": "https://github.com/Aiko-Dev/Car-Direction-Project-STI2D#readme",
+  "dependencies": {
+    "three": "^0.136.0",
+    "typescript": "^4.5.4"
+  }
+}
