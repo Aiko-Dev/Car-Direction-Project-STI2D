@@ -1,9 +1,6 @@
 import * as THREE from './three.js/build/three.module.js';
 import { OrbitControls } from './three.js/examples/jsm/controls/OrbitControls.js'
 
-var right = false;
-var left = false;
-
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
 camera.position.z = 1;
@@ -23,14 +20,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 document.body.appendChild(renderer.domElement);
 
 function animation(time) {
-    if(right) {
-        mesh.rotation.z = -time / 1000;
-        right = false;
-    } else if(left) {
-         mesh.rotation.z = time / 1000;
-         left = false;
-    }
-
+    requestAnimationFrame(animation);
     renderer.render( scene, camera );
 }
 
@@ -38,12 +28,10 @@ document.onkeypress = function (e) {
     e = e || window.event;
     switch(e.charCode) {
         case 100: // Droite
-            right = true;
-            console.log("droite");
+            mesh.rotation.z += -0.1;
             break;
         case 113: // Gauche
-            left = true;
-            console.log("gauche");
+            mesh.rotation.z += 0.1;
             break;
     }
 };
