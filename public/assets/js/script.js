@@ -31,7 +31,7 @@ scene.add(ambientLight);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setAnimationLoop(animation);
-renderer.setClearColor( 0xcccccc );
+renderer.setClearColor(0xcccccc);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -50,12 +50,14 @@ document.onkeypress = function (e) {
         case 100: // Droite
             //mesh.rotation.z += -0.1;
             gltf.scene.children[0].rotation.y += -0.1;
+            gltf.scene.children[2].rotation.y += 0.1;
             gltf.scene.children[1].position.x += -0.01;
             console.log("droite")
             break;
         case 113: // Gauche
             //mesh.rotation.z += 0.1;
             gltf.scene.children[0].rotation.y += 0.1;
+            gltf.scene.children[2].rotation.y += -0.1;
             gltf.scene.children[1].position.x += 0.01;
             console.log("gauche")
             break;
