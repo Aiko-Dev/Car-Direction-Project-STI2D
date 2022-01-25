@@ -4,7 +4,7 @@ import { GLTFLoader } from './three.js/examples/jsm/loaders/GLTFLoader.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 1;
+camera.position.z = 5;
 
 /*
 const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
@@ -19,8 +19,8 @@ let gltf;
 loader.load('./assets/steering_wheel.glb', _gltf => {
     console.log("loaded model !")
     gltf = _gltf;
-    console.log(gltf)
 	scene.add(gltf.scene);
+    animation();
 }, undefined, error => {
 	console.error( error );
 });
@@ -30,16 +30,18 @@ scene.add(ambientLight);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setAnimationLoop(animation);
+//renderer.setAnimationLoop(animation);
 renderer.setClearColor(0xcccccc);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
 document.body.appendChild(renderer.domElement);
 
+controls.addEventListener('change', animation); 
+
 function animation(time) {
-    requestAnimationFrame(animation);
-    renderer.render( scene, camera );
+    //requestAnimationFrame(animation);
+    renderer.render(scene, camera);
 }
 
 document.onkeypress = function (e) {
@@ -48,18 +50,36 @@ document.onkeypress = function (e) {
     e = e || window.event;
     switch(e.charCode) {
         case 100: // Droite
-            //mesh.rotation.z += -0.1;
+            if(gltf.scene.children[1].position.x < -0.25) break;
             gltf.scene.children[0].rotation.y += -0.1;
             gltf.scene.children[2].rotation.y += 0.1;
             gltf.scene.children[1].position.x += -0.01;
+
+            gltf.scene.children[3].position.x += -0.01;
+            gltf.scene.children[5].position.x += -0.01;
+            gltf.scene.children[4].position.x += -0.01;
+            gltf.scene.children[6].position.x += -0.01;
+
+            gltf.scene.children[4].rotation.y += -0.01;
+            gltf.scene.children[6].rotation.y += -0.01;
             console.log("droite")
+            animation();
             break;
         case 113: // Gauche
-            //mesh.rotation.z += 0.1;
+            if(gltf.scene.children[1].position.x > 0.2) break;
             gltf.scene.children[0].rotation.y += 0.1;
             gltf.scene.children[2].rotation.y += -0.1;
             gltf.scene.children[1].position.x += 0.01;
+
+            gltf.scene.children[3].position.x += 0.01;
+            gltf.scene.children[5].position.x += 0.01;
+            gltf.scene.children[4].position.x += 0.01;
+            gltf.scene.children[6].position.x += 0.01;
+
+            gltf.scene.children[4].rotation.y += 0.01;
+            gltf.scene.children[6].rotation.y += 0.01;
             console.log("gauche")
+            animation();
             break;
     }
 };
