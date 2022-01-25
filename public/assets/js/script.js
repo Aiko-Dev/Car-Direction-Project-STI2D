@@ -6,12 +6,15 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 5;
 
-/*
-const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-const material = new THREE.MeshNormalMaterial({ color: 0xFF6437 });
+const textureLoader = new THREE.TextureLoader();
+textureLoader.load('./assets/sky.jpg', texture => {
+    const geometry = new THREE.SphereGeometry(10);
+    const material = new THREE.MeshBasicMaterial({ map: texture, overdraw: 0.5 });
 
-const mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);*/
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.material.side = THREE.DoubleSide;
+    scene.add(mesh);
+})
 
 const loader = new GLTFLoader();
 let gltf;
@@ -53,12 +56,13 @@ document.onkeypress = function (e) {
             if(gltf.scene.children[1].position.x < -0.25) break;
             gltf.scene.children[0].rotation.y += -0.1;
             gltf.scene.children[2].rotation.y += 0.1;
-            gltf.scene.children[1].position.x += -0.01;
+            gltf.scene.children[1].position.x += -0.005;
 
-            gltf.scene.children[3].position.x += -0.01;
-            gltf.scene.children[5].position.x += -0.01;
-            gltf.scene.children[4].position.x += -0.01;
-            gltf.scene.children[6].position.x += -0.01;
+            gltf.scene.children[3].position.x += -0.005;
+            gltf.scene.children[5].position.x += -0.005;
+            gltf.scene.children[5].rotation.y += -0.01;
+            //gltf.scene.children[4].position.x += -0.01;
+           // gltf.scene.children[6].position.x += -0.01;
 
             gltf.scene.children[4].rotation.y += -0.01;
             gltf.scene.children[6].rotation.y += -0.01;
@@ -69,12 +73,13 @@ document.onkeypress = function (e) {
             if(gltf.scene.children[1].position.x > 0.2) break;
             gltf.scene.children[0].rotation.y += 0.1;
             gltf.scene.children[2].rotation.y += -0.1;
-            gltf.scene.children[1].position.x += 0.01;
+            gltf.scene.children[1].position.x += 0.005;
 
-            gltf.scene.children[3].position.x += 0.01;
-            gltf.scene.children[5].position.x += 0.01;
-            gltf.scene.children[4].position.x += 0.01;
-            gltf.scene.children[6].position.x += 0.01;
+            gltf.scene.children[3].position.x += 0.005;
+            gltf.scene.children[5].position.x += 0.005;
+            gltf.scene.children[5].rotation.y += 0.01;
+           // gltf.scene.children[4].position.x += 0.01;
+            //gltf.scene.children[6].position.x += 0.01;
 
             gltf.scene.children[4].rotation.y += 0.01;
             gltf.scene.children[6].rotation.y += 0.01;
