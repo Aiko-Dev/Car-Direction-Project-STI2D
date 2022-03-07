@@ -1,20 +1,69 @@
 import * as THREE from './three.js/build/three.module.js';
 import { OrbitControls } from './three.js/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from './three.js/examples/jsm/loaders/GLTFLoader.js';
+import { OBJLoader } from './three.js/examples/jsm/loaders/OBJLoader.js'
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 5;
 
 const textureLoader = new THREE.TextureLoader();
-textureLoader.load('./assets/sky.jpg', texture => {
-    const geometry = new THREE.SphereGeometry(10);
-    const material = new THREE.MeshBasicMaterial({ map: texture, overdraw: 0.5 });
+/*textureLoader.load('./assets/images.jpg', texture => {
+    const geometry = new THREE.SphereGeometry(40);
+    const material = new THREE.M7eshBasicMaterial({ map: texture, overdraw: 0.5 });
 
     const mesh = new THREE.Mesh(geometry, material);
     mesh.material.side = THREE.DoubleSide;
     scene.add(mesh);
+})*/
+
+textureLoader.load('./assets/road.jpg', texture => {
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(1, 100);
+    const geometry = new THREE.PlaneGeometry(1, 100)
+    const material = new THREE.MeshBasicMaterial({ map: texture, overdraw: 0.5 });
+    const road = new THREE.Mesh(geometry, material);
+    road.rotation.x = - Math.PI / 2;
+    road.position.y = 0.01;
+    scene.add(road);
 })
+textureLoader.load('./assets/sand.jpg', texture => {
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(40, 40);
+    const geometry = new THREE.PlaneGeometry(100, 100)
+    const material = new THREE.MeshBasicMaterial({ map: texture, overdraw: 0.5 });
+    const road = new THREE.Mesh(geometry, material);
+    road.rotation.x = - Math.PI / 2;
+    scene.add(road);
+})
+
+const objLoader = new OBJLoader();
+
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function createBox() {
+    
+}
+ 
+function generateCactuses(number) {
+    for(let i = 0; i < number; i++) {
+        console.log("generating cactus number " + i);
+        const h = getRandomArbitrary(2.5, 6);
+        const geometry = new THREE.BoxGeometry(1, h);
+        const materila = new THREE.MeshBasicMaterial();
+        const mesh = new THREE.Mesh(geometry, materila);
+        mesh.position.x = getRandomArbitrary(-40, 40);
+        mesh.position.y = h / 2;
+        mesh.position.z = getRandomArbitrary(-40, 40);
+        scene.add(mesh);
+    }
+}
+
+generateCactuses(20);
 
 const loader = new GLTFLoader();
 let gltf;
@@ -34,7 +83,7 @@ scene.add(ambientLight);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 //renderer.setAnimationLoop(animation);
-renderer.setClearColor(0xcccccc);
+renderer.setClearColor(0x9ACAE7);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
