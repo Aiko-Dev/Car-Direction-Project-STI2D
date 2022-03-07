@@ -68,9 +68,15 @@ generateCactuses(20);
 const loader = new GLTFLoader();
 let gltf;
 
-loader.load('./assets/steering_wheel.glb', _gltf => {
+loader.load('./assets/untitled.glb', _gltf => {
     console.log("loaded model !")
     gltf = _gltf;
+
+    //scale down gltf
+    gltf.scene.scale.set(0.01, 0.01, 0.01);
+    gltf.scene.position.x = -0.1;
+    gltf.scene.position.y = 0.15;
+
 	scene.add(gltf.scene);
     animation();
 }, undefined, error => {
@@ -97,42 +103,22 @@ function animation(time) {
 }
 
 document.onkeypress = function (e) {
-    console.log(gltf)
-
     e = e || window.event;
     switch(e.charCode) {
         case 100: // Droite
-            if(gltf.scene.children[1].position.x < -0.25) break;
-            gltf.scene.children[0].rotation.y += -0.1;
+            if(gltf.scene.children[0].rotation.z < -0.29) break;
             gltf.scene.children[2].rotation.y += 0.1;
-            gltf.scene.children[1].position.x += -0.005;
-
-            gltf.scene.children[3].position.x += -0.005;
-            gltf.scene.children[5].position.x += -0.005;
-            gltf.scene.children[5].rotation.y += -0.01;
-            //gltf.scene.children[4].position.x += -0.01;
-           // gltf.scene.children[6].position.x += -0.01;
-
-            gltf.scene.children[4].rotation.y += -0.01;
-            gltf.scene.children[6].rotation.y += -0.01;
-            console.log("droite")
+            gltf.scene.children[1].rotation.z += 0.01;
+            gltf.scene.children[0].rotation.z -= 0.01;
+            gltf.scene.children[3].position.x += 0.01;
             animation();
             break;
         case 113: // Gauche
-            if(gltf.scene.children[1].position.x > 0.2) break;
-            gltf.scene.children[0].rotation.y += 0.1;
-            gltf.scene.children[2].rotation.y += -0.1;
-            gltf.scene.children[1].position.x += 0.005;
-
-            gltf.scene.children[3].position.x += 0.005;
-            gltf.scene.children[5].position.x += 0.005;
-            gltf.scene.children[5].rotation.y += 0.01;
-           // gltf.scene.children[4].position.x += 0.01;
-            //gltf.scene.children[6].position.x += 0.01;
-
-            gltf.scene.children[4].rotation.y += 0.01;
-            gltf.scene.children[6].rotation.y += 0.01;
-            console.log("gauche")
+            if(gltf.scene.children[0].rotation.z > 0.19) break;
+            gltf.scene.children[2].rotation.y -= 0.1;
+            gltf.scene.children[1].rotation.z -= 0.01;
+            gltf.scene.children[0].rotation.z += 0.01;
+            gltf.scene.children[3].position.x -= 0.01;
             animation();
             break;
     }
